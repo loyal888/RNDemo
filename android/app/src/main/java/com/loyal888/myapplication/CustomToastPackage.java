@@ -23,5 +23,4 @@ public class CustomToastPackage implements ReactPackage {
     modules.add(new ToastModule(reactContext));
     return modules;
   }
-
 }

@@ -10,6 +10,8 @@ import {
 import { Alert, Button} from 'react-native';
 
 const ToastExample = NativeModules.ToastExample;
+
+// Promise
 function callAndroidPromise() {
 ToastExample.rnCallNativePromise('RN Promise 调用 Android 原生~~')
     .then((msg) => {
@@ -17,6 +19,16 @@ ToastExample.rnCallNativePromise('RN Promise 调用 Android 原生~~')
         console.log("promise 收到消息", msg)
     })
     .catch((error) => {
+        console.log(error)
+    })
+}
+
+// callback
+function callAndroidCallback() {
+    ToastExample.rnCallNativeCallback((x, y) => {
+        Alert.alert('callback 收到消息', x + ',' + y)
+        console.log('callback 收到消息', x, y)
+    }, (error) => {
         console.log(error)
     })
 }
@@ -39,6 +51,8 @@ class HelloWorld extends React.Component {
             title="Press Me"
           />
           <Button title='call_android_promise' onPress={callAndroidPromise}/>
+
+           <Button title='call_android_callback' onPress={callAndroidCallback}/>
         </View>
       </View>
     );

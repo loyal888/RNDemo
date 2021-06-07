@@ -5,6 +5,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -56,5 +57,12 @@ public class ToastModule extends ReactContextBaseJavaModule {
     promise.resolve(componentName);
   }
 
-
+  @ReactMethod
+  public void rnCallNativeCallback(Callback success, Callback error) {
+    try {
+      success.invoke(100, 200);
+    } catch (Exception e ) {
+      error.invoke(e.getMessage());
+    }
+  }
 }
