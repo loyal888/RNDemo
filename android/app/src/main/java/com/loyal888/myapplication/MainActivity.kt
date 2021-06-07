@@ -18,6 +18,7 @@ import com.facebook.react.common.LifecycleState
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter
 import com.facebook.react.shell.MainReactPackage
+import com.facebook.soloader.SoLoader
 
 
 class MainActivity : AppCompatActivity(), DefaultHardwareBackBtnHandler {
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity(), DefaultHardwareBackBtnHandler {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        SoLoader.init(this, false)
 
         val packages = mutableListOf<ReactPackage>()
         packages.add(MainReactPackage()) // 默认
@@ -99,7 +101,7 @@ class MainActivity : AppCompatActivity(), DefaultHardwareBackBtnHandler {
             val params: WritableMap = Arguments.createMap()
             params.putString("eventProperty", "someValue")
             sendEvent(mReactInstanceManager?.currentReactContext!!, "SUCCESS", params)
-        },10000)
+        },20000)
     }
 
     override fun onDestroy() {
@@ -144,5 +146,4 @@ class MainActivity : AppCompatActivity(), DefaultHardwareBackBtnHandler {
             .getJSModule(RCTDeviceEventEmitter::class.java)
             .emit(eventName, params)
     }
-
 }

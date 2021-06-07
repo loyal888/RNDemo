@@ -10,4 +10,5 @@ https://reactnative.cn/docs/debugging
 https://reactnative.cn/docs/native-modules-android
 https://juejin.cn/post/6844903827594985480
 
-#
+# 通过原生 View 进行交互
+https://juejin.cn/post/6844903866341801998
