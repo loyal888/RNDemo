@@ -1,5 +1,6 @@
 package com.loyal888.myapplication
 
+import android.annotation.Nullable
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -7,14 +8,16 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.KeyEvent
 import androidx.appcompat.app.AppCompatActivity
-import com.facebook.react.PackageList
 import com.facebook.react.ReactInstanceManager
 import com.facebook.react.ReactPackage
 import com.facebook.react.ReactRootView
+import com.facebook.react.bridge.Arguments
+import com.facebook.react.bridge.ReactContext
+import com.facebook.react.bridge.WritableMap
 import com.facebook.react.common.LifecycleState
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler
+import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter
 import com.facebook.react.shell.MainReactPackage
-import com.facebook.soloader.SoLoader
 
 
 class MainActivity : AppCompatActivity(), DefaultHardwareBackBtnHandler {
@@ -90,6 +93,13 @@ class MainActivity : AppCompatActivity(), DefaultHardwareBackBtnHandler {
         if (mReactInstanceManager != null) {
             mReactInstanceManager!!.onHostResume(this, this)
         }
+
+        // 延迟发送一个事件给RN
+        mReactRootView?.postDelayed({
+            val params: WritableMap = Arguments.createMap()
+            params.putString("eventProperty", "someValue")
+            sendEvent(mReactInstanceManager?.currentReactContext!!, "SUCCESS", params)
+        },10000)
     }
 
     override fun onDestroy() {
@@ -121,4 +131,18 @@ class MainActivity : AppCompatActivity(), DefaultHardwareBackBtnHandler {
         }
         return super.onKeyUp(keyCode, event)
     }
+
+    /**
+     * 发送事件给RN
+     */
+    private fun sendEvent(
+        reactContext: ReactContext,
+        eventName: String,
+        @Nullable params: WritableMap
+    ) {
+        reactContext
+            .getJSModule(RCTDeviceEventEmitter::class.java)
+            .emit(eventName, params)
+    }
+
 }

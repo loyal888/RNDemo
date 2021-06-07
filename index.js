@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 
 import { Alert, Button} from 'react-native';
+import { DeviceEventEmitter} from 'react-native';
 
 const ToastExample = NativeModules.ToastExample;
 
@@ -35,12 +36,32 @@ function callAndroidCallback() {
 
 
 
+
+
 class HelloWorld extends React.Component {
 
    _onPressButton() {
     // Alert.alert('You tapped the button!')
     ToastExample.show('Awesome', ToastExample.SHORT);
   }
+
+  componentDidMount() {
+  // 收到监听
+  this.listener = DeviceEventEmitter.addListener('SUCCESS', (message) => {
+    // 收到监听后想做的事情，’SUCCESS‘ 必须与原生层传递的 eventName 一致
+    console.warn(message);
+  });
+  this.errorListener = DeviceEventEmitter.addListener('ERROR', (message) => {
+    // 收到监听后想做的事情，’ERROR‘ 必须与原生层传递的 eventName 一致
+    console.warn(message);
+  });
+}
+
+componentWillUnmount() {
+  // 移除监听
+  if (this.listener) { this.listener.remove() }
+  if (this.errorListener) { this.listener.remove() }
+}
 
   render() {
     return (
