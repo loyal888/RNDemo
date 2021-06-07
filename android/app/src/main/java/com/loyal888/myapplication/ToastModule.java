@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.facebook.react.bridge.NativeModule;
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -47,5 +48,13 @@ public class ToastModule extends ReactContextBaseJavaModule {
   public void show(String message, int duration) {
     Toast.makeText(getReactApplicationContext(), message, duration).show();
   }
+
+  @ReactMethod
+  public void rnCallNativePromise(String msg, Promise promise ) {
+    Toast.makeText(reactContext, msg, Toast.LENGTH_LONG).show();
+    String  componentName = "Hello world";
+    promise.resolve(componentName);
+  }
+
 
 }

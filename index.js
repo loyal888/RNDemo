@@ -10,12 +10,23 @@ import {
 import { Alert, Button} from 'react-native';
 
 const ToastExample = NativeModules.ToastExample;
+function callAndroidPromise() {
+ToastExample.rnCallNativePromise('RN Promise 调用 Android 原生~~')
+    .then((msg) => {
+        Alert.alert('promise 收到消息', msg)
+        console.log("promise 收到消息", msg)
+    })
+    .catch((error) => {
+        console.log(error)
+    })
+}
+
 
 
 class HelloWorld extends React.Component {
 
    _onPressButton() {
-    Alert.alert('You tapped the button!')
+    // Alert.alert('You tapped the button!')
     ToastExample.show('Awesome', ToastExample.SHORT);
   }
 
@@ -27,6 +38,7 @@ class HelloWorld extends React.Component {
             onPress={this._onPressButton}
             title="Press Me"
           />
+          <Button title='call_android_promise' onPress={callAndroidPromise}/>
         </View>
       </View>
     );
