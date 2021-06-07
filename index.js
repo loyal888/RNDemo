@@ -3,29 +3,52 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
+  NativeModules,
   View
 } from 'react-native';
 
+import { Alert, Button} from 'react-native';
+
+const ToastExample = NativeModules.ToastExample;
+
+
 class HelloWorld extends React.Component {
+
+   _onPressButton() {
+    Alert.alert('You tapped the button!')
+    ToastExample.show('Awesome', ToastExample.SHORT);
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.hello}>Hello, World！</Text>
+        <View style={styles.buttonContainer}>
+          <Button
+            onPress={this._onPressButton}
+            title="Press Me"
+          />
+        </View>
       </View>
     );
   }
 }
-var styles = StyleSheet.create({
+
+
+const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center'
+   flex: 1,
+   justifyContent: 'center',
   },
-  hello: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10
+  buttonContainer: {
+    margin: 20
+  },
+  alternativeLayoutButtonContainer: {
+    margin: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   }
-});
+})
+
 
 AppRegistry.registerComponent(
   'MyReactNativeApp',
