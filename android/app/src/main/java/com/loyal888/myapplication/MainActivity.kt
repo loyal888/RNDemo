@@ -101,7 +101,7 @@ class MainActivity : AppCompatActivity(), DefaultHardwareBackBtnHandler {
             val params: WritableMap = Arguments.createMap()
             params.putString("eventProperty", "someValue")
             sendEvent(mReactInstanceManager?.currentReactContext!!, "SUCCESS", params)
-        },20000)
+        },10000)
     }
 
     override fun onDestroy() {
@@ -134,16 +134,21 @@ class MainActivity : AppCompatActivity(), DefaultHardwareBackBtnHandler {
         return super.onKeyUp(keyCode, event)
     }
 
-    /**
-     * 发送事件给RN
-     */
-    private fun sendEvent(
-        reactContext: ReactContext,
-        eventName: String,
-        @Nullable params: WritableMap
-    ) {
-        reactContext
-            .getJSModule(RCTDeviceEventEmitter::class.java)
-            .emit(eventName, params)
+
+    companion object {
+        /**
+         * 发送事件给RN
+         */
+        @JvmStatic
+        public fun sendEvent(
+            reactContext: ReactContext,
+            eventName: String,
+            @Nullable params: WritableMap
+        ) {
+            reactContext
+                .getJSModule(RCTDeviceEventEmitter::class.java)
+                .emit(eventName, params)
+        }
     }
+
 }
