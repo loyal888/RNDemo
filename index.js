@@ -44,6 +44,7 @@ class HelloWorld extends React.Component {
         // 收到监听
         this.listener = DeviceEventEmitter.addListener('SUCCESS', (message) => {
             // 收到监听后想做的事情，’SUCCESS‘ 必须与原生层传递的 eventName 一致
+            console.error(message);
         });
         this.errorListener = DeviceEventEmitter.addListener('ERROR', (message) => {
             // 收到监听后想做的事情，’ERROR‘ 必须与原生层传递的 eventName 一致
