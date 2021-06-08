@@ -70,7 +70,12 @@ class HelloWorld extends React.Component {
                         title="Press Me"/>
                     <Button title='call_android_promise' onPress={callAndroidPromise}/>
                     <Button title='call_android_callback' onPress={callAndroidCallback}/>
-                    <MyButton style={{width: 160, height: 50}} text='这是个按钮'/>
+                    <MyButton style={{width: 160, height: 50}} text='这是个按钮'
+                    onReactClick={data=>{
+                              // 这里接收 event 传过来的数据
+                              console.error(data);
+                          }}
+                    />
                 </View>
 
             </View>
